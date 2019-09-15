@@ -3,6 +3,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * @author abbykrishnan
+ * CrazyEights class that has the game mechanics to play
+ */
 public class CrazyEights {
 	
 	private static final Map<Integer, Integer> cardsPerPlayerMap = createPlayMap(); 
@@ -10,24 +14,44 @@ public class CrazyEights {
 	private CardDeck deck; 
 	private int playerNum; 
 	
+	/**
+	 * CrazyEights object that represents a game 
+	 * @param playerList list of the players 
+	 */
 	public CrazyEights(ArrayList<Player> playerList) {
 		this.playerList = playerList; 
 		deck = new CardDeck(); 
 		this.playerNum = 0; 
 	}
 	
+	/**
+	 * Gets deck
+	 * @return CardDeck 
+	 */
 	public CardDeck getDeck() {
 		return deck; 
 	}
 	
+	/**
+	 * Gets players
+	 * @return player list 
+	 */
 	public ArrayList<Player> getPlayers() {
 		return playerList; 
 	}
 	
+	/**
+	 * Gets number of players 
+	 * @return number of players 
+	 */
 	public int getPlayerNum() {
 		return playerNum; 
 	}
 	
+	/**
+	 * Prompts for user input to get the number of players 
+	 * @param in Scanner object 
+	 */
 	public void setPlayerNumber(Scanner in) {
 		int playerNum; 
 		while(true) {
@@ -52,6 +76,10 @@ public class CrazyEights {
 		this.playerNum = playerNum; 
 	}
 	
+	/**
+	 * Sets up the player list by prompting for the correct number of names of Players 
+	 * @param in Scanner object
+	 */
 	public void setUpPlayerList(Scanner in) {
 		while(true) {
 			System.out.println("Awesome! Please enter " + playerNum + " names separated by a comma");
@@ -72,6 +100,10 @@ public class CrazyEights {
 		}
 	}
 	
+	/**
+	 * Starts the game mechanics, by simulating each round. 
+	 * @param in Scanner object
+	 */
 	public void startGame(Scanner in) {
 		int playerTurn = 0; 
 		Card currCard = null;
@@ -86,7 +118,7 @@ public class CrazyEights {
 			
 			while(true) {
 				System.out.println("Press R for 'Ready' for next player"); 
-				boolean ready = in.nextLine().equals("R") ? true: false; 
+				boolean ready = in.nextLine().equalsIgnoreCase("r") ? true: false; 
 				if(ready) break; 
 			}
 			playerTurn++; 
@@ -99,6 +131,15 @@ public class CrazyEights {
 		System.out.println("Game over! Congrats to player " + lastPlayer.getName()); 
 	}
 	
+	/**
+	 * Simulates the actual playing of the game
+	 * @param in Scanner object
+	 * @param deck CardDeck in use 
+	 * @param currPlayer current player who's turn it is
+	 * @param playerNum number of player
+	 * @param currCard current card played down 
+	 * @return Card that gets played 
+	 */
 	private static Card validatePlay(Scanner in, CardDeck deck, Player currPlayer, int playerNum, Card currCard) {
 		int cardToPlay; 
 		ArrayList<Integer> validPlayList; 
@@ -148,6 +189,10 @@ public class CrazyEights {
 		}
 	}
 	
+	/**
+	 * Fills the map that maps the number of players to the number of cards they get 
+	 * @return Map
+	 */
 	private static Map<Integer, Integer> createPlayMap() {
 	    Map<Integer,Integer> map = new HashMap<Integer,Integer>();
 	    
@@ -159,6 +204,9 @@ public class CrazyEights {
 	    return map; 
 	}
 	
+	/**
+	 * Prints out new lines to clear the terminal 
+	 */
 	private static void clearScreen() {  
 		for(int i = 0; i < 50; i++)
 		{
@@ -166,6 +214,11 @@ public class CrazyEights {
 		}
 	}
 	
+	/**
+	 * Determines if someone has won the game 
+	 * @param playerList list of players 
+	 * @return true if someone has won
+	 */
 	private boolean gameIsOver(ArrayList<Player> playerList) {
 		for(Player player: playerList) {
 			if(player.hasWon()){
